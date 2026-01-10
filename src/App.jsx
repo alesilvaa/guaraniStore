@@ -4,6 +4,7 @@ import Header from './components/Header'
 import ProductCard from './components/ProductCard'
 import Cart from './components/Cart'
 import Footer from './components/Footer'
+import WhatsAppButton from './components/WhatsAppButton'
 import { CartProvider } from './context/CartContext'
 import './App.css'
 
@@ -79,6 +80,7 @@ function App() {
           </div>
         </main>
         <Footer />
+        <WhatsAppButton />
       </div>
     </CartProvider>
   )

@@ -17,15 +17,6 @@ export default function Header() {
                     <ul>
                         <li><a href="#" className="active">Inicio</a></li>
                         <li><a href="#products">Productos</a></li>
-                        <li>
-                            <a
-                                href="https://wa.me/595986942192?text=Hola%20Guarani%20Store%2C%20tengo%20una%20consulta."
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Contacto
-                            </a>
-                        </li>
                     </ul>
                 </nav>
 
