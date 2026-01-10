@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './WhatsAppButton.css';
 
-const WHATSAPP_NUMBER = '595986942192';
+const WHATSAPP_NUMBER = '595994457849';
 
 export default function WhatsAppButton() {
     const [isVisible, setIsVisible] = useState(true);
