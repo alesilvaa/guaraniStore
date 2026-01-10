@@ -1,0 +1,86 @@
+import React, { useState } from 'react';
+import { useCart } from '../context/CartContext';
+import './ProductCard.css';
+
+export default function ProductCard({ product }) {
+    const { addToCart } = useCart();
+    const [selectedColor, setSelectedColor] = useState(product.colors ? product.colors[0] : null);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const handleAdd = () => {
+        addToCart(product, selectedColor);
+    };
+
+    const nextImage = () => {
+        setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
+    };
+
+    const prevImage = () => {
+        setCurrentImageIndex((prev) => (prev - 1 + product.images.length) % product.images.length);
+    };
+
+    return (
+        <div className="product-card">
+            <div className="image-container">
+                <img
+                    src={product.images[currentImageIndex]}
+                    alt={product.title}
+                    className="product-image"
+                />
+                {product.images.length > 1 && (
+                    <>
+                        <button className="nav-btn prev" onClick={prevImage}>‹</button>
+                        <button className="nav-btn next" onClick={nextImage}>›</button>
+                        <div className="dots">
+                            {product.images.map((_, idx) => (
+                                <span
+                                    key={idx}
+                                    className={`dot ${idx === currentImageIndex ? 'active' : ''}`}
+                                    onClick={() => setCurrentImageIndex(idx)}
+                                />
+                            ))}
+                        </div>
+                    </>
+                )}
+            </div>
+
+            <div className="product-info">
+                <h3 className="product-title">{product.title}</h3>
+                <p className="product-price">Gs. {product.price.toLocaleString('es-PY')}</p>
+
+                {product.colors && (
+                    <div className="color-selector">
+                        <span className="label">Colores Disponibles: <span style={{ fontWeight: 600 }}>{selectedColor}</span></span>
+                        <div className="colors">
+                            {product.colors.map(color => {
+                                const colorMap = {
+                                    'Negro': '#212529',
+                                    'Rosa': '#ff8fa3',
+                                    'Verde': '#80b918',
+                                    'Lila': '#cc5de8',
+                                    'Gris': '#808080'
+                                };
+                                const bg = colorMap[color] || '#ccc';
+
+                                return (
+                                    <button
+                                        key={color}
+                                        className={`color-swatch ${selectedColor === color ? 'selected' : ''}`}
+                                        onClick={() => setSelectedColor(color)}
+                                        style={{ backgroundColor: bg }}
+                                        title={color}
+                                        aria-label={color}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+
+                <button onClick={handleAdd} className="btn-primary add-btn">
+                    Agregar al Carrito
+                </button>
+            </div>
+        </div>
+    );
+}
