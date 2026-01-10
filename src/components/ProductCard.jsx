@@ -6,22 +6,30 @@ export default function ProductCard({ product }) {
     const { addToCart } = useCart();
     const [selectedColor, setSelectedColor] = useState(product.colors ? product.colors[0] : null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isAdded, setIsAdded] = useState(false);
 
     const handleAdd = () => {
         addToCart(product, selectedColor);
+        setIsAdded(true);
+        setTimeout(() => setIsAdded(false), 2000); // Reset after 2s
     };
 
-    const nextImage = () => {
+    const nextImage = (e) => {
+        e.stopPropagation();
         setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
     };
 
-    const prevImage = () => {
+    const prevImage = (e) => {
+        e.stopPropagation();
         setCurrentImageIndex((prev) => (prev - 1 + product.images.length) % product.images.length);
     };
 
     return (
         <div className="product-card">
             <div className="image-container">
+                {/* Badge for new items - Logic could be dynamic based on date */}
+                <span className="badge-new">NUEVO</span>
+
                 <img
                     src={product.images[currentImageIndex]}
                     alt={product.title}
@@ -36,7 +44,7 @@ export default function ProductCard({ product }) {
                                 <span
                                     key={idx}
                                     className={`dot ${idx === currentImageIndex ? 'active' : ''}`}
-                                    onClick={() => setCurrentImageIndex(idx)}
+                                    onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(idx); }}
                                 />
                             ))}
                         </div>
@@ -50,7 +58,7 @@ export default function ProductCard({ product }) {
 
                 {product.colors && (
                     <div className="color-selector">
-                        <span className="label">Colores Disponibles: <span style={{ fontWeight: 600 }}>{selectedColor}</span></span>
+                        <span className="label">Color: <span style={{ fontWeight: 600, color: 'var(--color-text)' }}>{selectedColor}</span></span>
                         <div className="colors">
                             {product.colors.map(color => {
                                 const colorMap = {
@@ -77,8 +85,12 @@ export default function ProductCard({ product }) {
                     </div>
                 )}
 
-                <button onClick={handleAdd} className="btn-primary add-btn">
-                    Agregar al Carrito
+                <button
+                    onClick={handleAdd}
+                    className={`btn-primary add-btn ${isAdded ? 'added' : ''}`}
+                    disabled={isAdded}
+                >
+                    <span>{isAdded ? '¡Agregado! 🛍️' : 'Agregar al Carrito'}</span>
                 </button>
             </div>
         </div>
