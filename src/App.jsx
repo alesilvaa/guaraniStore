@@ -12,7 +12,7 @@ const PRODUCTS = [
   {
     id: 1,
     title: 'Sombrilla Parasol Para El Auto',
-    price: 189000,
+    price: 99000,
     colors: ['Negro'],
     images: [
       '/images/Producto_1/WhatsApp Image 2026-01-10 at 00.58.54.jpeg',
