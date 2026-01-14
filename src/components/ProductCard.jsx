@@ -62,13 +62,17 @@ export default function ProductCard({ product }) {
                         <div className="colors">
                             {product.colors.map(color => {
                                 const colorMap = {
-                                    'Negro': '#212529',
-                                    'Rosa': '#ff8fa3',
-                                    'Verde': '#80b918',
-                                    'Lila': '#cc5de8',
-                                    'Gris': '#808080'
+                                    'negro': '#000000',
+                                    'rosa': '#ff8fa3',
+                                    'verde': '#80b918',
+                                    'lila': '#cc5de8',
+                                    'gris': '#808080',
+                                    'blanco': '#ffffff',
+                                    'azul': '#00509d',
+                                    'rojo': '#e74c3c'
                                 };
-                                const bg = colorMap[color] || '#ccc';
+                                const normalizedColor = color.trim().toLowerCase();
+                                const bg = colorMap[normalizedColor] || '#ccc';
 
                                 return (
                                     <button
